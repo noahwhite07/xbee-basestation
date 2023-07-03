@@ -9,7 +9,7 @@ from digi.xbee.devices import XBee64BitAddress
 from digi.xbee.devices import DiscoveryOptions
 
 # Reference to our local device
-xbee = XBeeDevice("COM16", 115200)
+xbee = XBeeDevice("COM16", 230400)
 
 dataReceived = False
 
@@ -17,6 +17,10 @@ dataReceived = False
 receivedImage = []
 
 chunk_count = 0
+
+start_time = 0.00
+end_time = 0.00
+
 
 def save_image_to_file():
     global receivedImage, dataReceived
@@ -36,8 +40,10 @@ def save_image_to_file():
 
 # Callback for data received from remote
 def my_data_received_callback(xbee_message):
-    global  dataReceived, receivedImage, chunk_count
-    address = xbee_message.remote_device.get_64bit_addr()
+    global  dataReceived, receivedImage, chunk_count, start_time, end_time
+    if chunk_count == 0:
+        start_time = time.time()
+    #address = xbee_message.remote_device.get_64bit_addr()
     #data = xbee_message.data.decode("utf8")
 
     # Extract the raw byte array from the message
@@ -50,10 +56,17 @@ def my_data_received_callback(xbee_message):
         all_data_received = False
 
 
-
     # Once we have every frame, save the image to a file
     if all_data_received:
-        print(f'Done. Chunks recieved: {chunk_count}. Bytes received: {chunk_count * 12}') # 2792, 2737, 1510
+
+        # Calculate the elapsed time in seconds
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+
+        # Print the elapsed time
+        print(f"Elapsed time: {elapsed_time:.1f} seconds")
+
+        print(f'Done. Chunks recieved: {chunk_count}. Bytes received: {chunk_count * 40}') # 2792, 2737, 1510
         save_image_to_file()
     else:
         # print("Received data from %s: %s" % (address, data))
@@ -66,7 +79,6 @@ def my_data_received_callback(xbee_message):
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 def node_discovered(remote_xbee):
     print("hello")
-    #xbee.send_data(remote_xbee, "I'm the shit; I'm fartin'")
 
     # Add the callback for data received from remote
     xbee.add_data_received_callback(my_data_received_callback)
@@ -86,7 +98,7 @@ if __name__ == '__main__':
     xbee.send_data_broadcast("Hello, XBee router!")
 
     # Instantiate the remote xbee device and read its info
-    remote = RemoteXBeeDevice(xbee, XBee64BitAddress.from_hex_string("0013A20042191769"))
+    remote = RemoteXBeeDevice(xbee, XBee64BitAddress.from_hex_string("0013A2004219170D"))
     remote.read_device_info()
     remote_node_id = remote.get_node_id()
     print(remote_node_id)
@@ -109,5 +121,5 @@ if __name__ == '__main__':
     while not dataReceived:
         time.sleep(0.1)
 
-    xbee.close()
+    xbee.close() #ff00e505b8b5944d
 
