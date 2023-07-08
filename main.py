@@ -1,3 +1,6 @@
+import os
+import subprocess
+from subprocess import Popen, PIPE
 import time
 import binascii
 import sys
@@ -46,6 +49,8 @@ def save_image_to_file(zone_number):
     with open(f'{filename}.jpg', 'wb') as image_file:
         image_file.write(full_data)
     image_file.close()
+
+
 
     # Clear the accumulated data for future usage.
     receivedImage = []
@@ -110,6 +115,17 @@ def node_discovered(remote_xbee):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
+    lpr_command = 'python ./automatic_script.py 1 C:/Users/Paula/PycharmProjects/xbee_test/samples/us-1.jpg'
+    #subprocess.run(lpr_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    print('CWD: ' + os.getcwd())
+    p = subprocess.Popen(lpr_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    print(out)
+    print(err)
+    print("lpr done")
+
     # Ensure files are cleaned up on exit
     signal.signal(signal.SIGINT, signal_handler)
 

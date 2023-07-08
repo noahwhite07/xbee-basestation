@@ -3,3 +3,16 @@ output.c
 serialize_image.py
 images
 .idea/*
+.DS_Store
+experiments
+logs/
+*results*
+*__pycache__*
+*.sh
+datasets
+basicsr.egg-info
+Output_Images
+docs
+Input_Images/*
+samples/*
+.eggs
