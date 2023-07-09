@@ -1,3 +1,33 @@
+cElementTree==1.0.2-20050302
+cog==0.8.0
+coverage==7.2.7
+digi_xbee==1.4.1
+dlib==19.24.2
+elementtree==1.2.6-20050316
+ipython==8.14.0
+lmdb==1.4.1
+lxml==4.9.3
+matplotlib==3.7.2
+mc==0.0
+opencv_contrib_python==4.8.0.74
+opencv_python==4.8.0.74
+Parser==0.1
+Pillow==10.0.0
+ptflops==0.7
+Pygments==2.15.1
+pythran==0.13.1
+PyYAML==6.0
+Requests==2.31.0
+runtests==0.0.28
+scipy==1.11.1
+setuptools==57.4.0
+skimage==0.0
+scikit-image
+torch==1.10.1+cu113
+torchvision==0.11.2+cu113
+tqdm==4.65.0
+tb-nightly
+wandb==0.15.5
 pytesseract
 opencv-python
 opencv-contrib-python
@@ -5,17 +35,5 @@ addict
 future
 lmdb
 numpy
-opencv-python
-Pillow
-pyyaml
-requests
-scikit-image
-scipy
-tb-nightly
-tqdm
 yapf
-Pillow
-torch --index-url https://download.pytorch.org/whl/cu118
-torchvision --index-url https://download.pytorch.org/whl/cu118
-torchaudio --index-url https://download.pytorch.org/whl/cu118
 tensorflow
